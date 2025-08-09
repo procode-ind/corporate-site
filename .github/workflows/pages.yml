@@ -1,0 +1,47 @@
+# This workflow automates the deployment of the site to GitHub Pages.
+# It runs automatically on a push to the main branch or can be triggered manually.
+# There are two jobs:
+# 1. build: installs dependencies, builds the project, and uploads the build artifact.
+# 2. deploy: publishes the uploaded artifact to GitHub Pages.
+# The workflow includes specific permissions for contents, pages, and id-token,
+# and uses concurrency to cancel any in-progress runs when a new one starts.
+
+name: Deploy Site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
