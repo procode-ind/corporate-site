@@ -1,0 +1,7 @@
+---
+import type { Locale } from '../i18n';
+const { lang = 'en' } = Astro.props as { lang?: Locale };
+const other = lang === 'en' ? 'es' : 'en';
+---
+
+<a href={`/${other}`} class="btn-ghost text-sm">{other.toUpperCase()}</a>

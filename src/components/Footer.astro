@@ -1,0 +1,31 @@
+---
+import type { Locale } from '../i18n';
+import { t } from '../i18n';
+const { lang = 'en' } = Astro.props as { lang?: Locale };
+---
+
+<footer class="mt-20 border-t border-[var(--color-border)]">
+  <div class="container-xl grid gap-8 py-10 text-sm text-white/70 md:grid-cols-3">
+    <div>
+      <img src="/logo-no-bg.png" alt="ProCode Ind" class="mb-3 h-8" />
+      <p>{t(lang, 'footer.col1')}</p>
+    </div>
+    <div>
+      <h3 class="mb-2 font-semibold text-white">{t(lang, 'footer.col2')}</h3>
+      <ul class="space-y-1">
+        <li>Architecture</li>
+        <li>Backend</li>
+        <li>Cloud & Kubernetes</li>
+        <li>POS & e‑commerce</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="mb-2 font-semibold text-white">{t(lang, 'footer.col3')}</h3>
+      <p>{t(lang, 'footer.loc')}</p>
+      <p class="mt-2">contact@procodeind.com</p>
+    </div>
+  </div>
+  <div class="py-6 text-center text-xs text-white/50">
+    © {new Date().getFullYear()} ProCode Ind — {t(lang, 'footer.rights')}
+  </div>
+</footer>

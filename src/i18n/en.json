@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "title": "ProCode Ind — Professional code industry",
+    "description": "Architecture, custom software and cloud deployments that scale."
+  },
+  "nav": {
+    "services": "Services",
+    "projects": "Projects",
+    "contact": "Contact",
+    "cta": "Book a call"
+  },
+  "hero": {
+    "kicker": "Professional code industry",
+    "headline": "Architecture & software that truly scales",
+    "sub": "Robust backends, microservices and cloud for products that sell: POS, e‑commerce and data platforms.",
+    "primary": "Talk to us",
+    "secondary": "View services"
+  },
+  "services": {
+    "title": "Services",
+    "a": {
+      "title": "Architecture & Cloud",
+      "desc": "Blueprints, K8s, CI/CD, observability and cost control."
+    },
+    "b": {
+      "title": "Robust Backends",
+      "desc": "Modular APIs in NestJS/FastAPI/Go. PostgreSQL, Redis, RabbitMQ."
+    },
+    "c": {
+      "title": "Products that Sell",
+      "desc": "POS, e‑commerce and web/mobile apps focused on business."
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "name": "Name",
+    "email": "Email",
+    "msg": "What do you need?",
+    "send": "Send"
+  },
+  "footer": {
+    "col1": "Architecture, custom development and cloud.",
+    "col2": "Services",
+    "col3": "Contact",
+    "loc": "Colombia · Remote LATAM/US",
+    "rights": "All rights reserved."
+  }
+}
