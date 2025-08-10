@@ -35,6 +35,26 @@
       "desc": "Soluciones listas para el mercado: POS, e‑commerce y aplicaciones web/móvil enfocadas en generar resultados."
     }
   },
+  "industries": {
+    "title": "Qué hacemos (modo industria)",
+    "architecture": {
+      "title": "Arquitectura & Plataforma",
+      "desc": "Diseñamos plataformas, estándares y pipelines para escalar productos multi-tenant, cloud‑native y seguros."
+    },
+    "factory": {
+      "title": "Fábrica de productos",
+      "desc": "Construimos líneas de producción de software con CI/CD, QA automatizada y observabilidad desde el día uno."
+    },
+    "consulting": {
+      "title": "Consultoría estratégica",
+      "desc": "Intervenciones de alto impacto en arquitectura, performance, costos en cloud y modernización."
+    }
+  },
+  "cta": {
+    "title": "Hablemos de tu plataforma",
+    "desc": "Construyamos juntos una plataforma lista para el futuro: cloud‑native, observable y con automatización de punta a punta.",
+    "button": "Agendar reunión"
+  },
   "contact": {
     "title": "Contacto",
     "desc": "¿Tienes un proyecto en mente? Hablemos sobre cómo podemos ayudarte a construir la solución perfecta.",

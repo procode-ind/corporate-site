@@ -1,0 +1,49 @@
+---
+import type { Locale } from '../i18n';
+import { t } from '../i18n';
+
+interface Props {
+  lang?: Locale;
+  className?: string; // Additional CSS classes for the section
+  href?: string; // Custom CTA link
+}
+
+const {
+  lang = 'es',
+  className = '',
+  href = '#contact', // Default to contact section
+} = Astro.props as Props;
+
+// Construct section classes
+const sectionClasses = `mx-auto max-w-4xl px-4 py-16 text-center ${className}`.trim();
+---
+
+<section class={sectionClasses}>
+  <h2 class="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+    {t(lang, 'cta.title')}
+  </h2>
+  <p class="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-white/80">
+    {t(lang, 'cta.desc')}
+  </p>
+  <div class="mt-8">
+    <a
+      {href}
+      class="btn-primary inline-flex items-center gap-2 text-white transition-all duration-300 hover:scale-105 focus:scale-105"
+    >
+      <span>{t(lang, 'cta.button')}</span>
+      <svg
+        class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+      </svg>
+    </a>
+  </div>
+</section>

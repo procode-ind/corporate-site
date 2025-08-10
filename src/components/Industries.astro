@@ -1,0 +1,53 @@
+---
+import type { Locale } from '../i18n';
+import { t } from '../i18n';
+
+interface Props {
+  lang?: Locale;
+  className?: string; // Additional CSS classes for the section
+}
+
+const { lang = 'es', className = '' } = Astro.props as Props;
+
+// Industries data structure for easier maintenance
+const industries = [
+  {
+    key: 'architecture',
+    icon: '🏗️',
+  },
+  {
+    key: 'factory',
+    icon: '🏭',
+  },
+  {
+    key: 'consulting',
+    icon: '💡',
+  },
+] as const;
+
+// Construct section classes
+const sectionClasses = `mx-auto max-w-6xl px-4 py-16 ${className}`.trim();
+---
+
+<section class={sectionClasses}>
+  <h2 class="mb-8 text-center text-3xl font-extrabold tracking-tight text-white">
+    {t(lang, 'industries.title')}
+  </h2>
+  <div class="grid gap-6 md:grid-cols-3">
+    {
+      industries.map((industry) => (
+        <div class="card p-6 transition-all duration-300 hover:scale-105 hover:bg-white/10">
+          <div class="mb-3 flex items-center gap-3">
+            <span class="text-2xl" role="img" aria-hidden="true">
+              {industry.icon}
+            </span>
+            <h3 class="text-xl font-semibold text-white">
+              {t(lang, `industries.${industry.key}.title`)}
+            </h3>
+          </div>
+          <p class="leading-relaxed text-white/80">{t(lang, `industries.${industry.key}.desc`)}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>

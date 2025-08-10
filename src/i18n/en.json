@@ -31,6 +31,26 @@
       "desc": "Market-ready solutions: POS, e-commerce and web/mobile apps focused on delivering results."
     }
   },
+  "industries": {
+    "title": "What we do (industry mode)",
+    "architecture": {
+      "title": "Architecture & Platform",
+      "desc": "We design platforms, standards and pipelines to scale multi-tenant, cloud-native and secure products."
+    },
+    "factory": {
+      "title": "Product Factory",
+      "desc": "We build software production lines with CI/CD, automated QA and observability from day one."
+    },
+    "consulting": {
+      "title": "Strategic Consulting",
+      "desc": "High-impact interventions in architecture, performance, cloud costs and modernization."
+    }
+  },
+  "cta": {
+    "title": "Let's talk about your platform",
+    "desc": "Let's build together a future-ready platform: cloud-native, observable and with end-to-end automation.",
+    "button": "Schedule meeting"
+  },
   "future": {
     "title": "Moving forward together",
     "body": "ProCode Ind is a code industry. You bring the problem; we provide the infrastructure, processes and technical focus to build software solutions that scale with you."
