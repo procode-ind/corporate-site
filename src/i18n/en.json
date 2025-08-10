@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "ProCode Ind — Professional code industry",
-    "description": "Architecture, custom software and cloud deployments that scale."
+    "description": "Tailored tech solutions: from simple apps to complex enterprise architectures, with cloud deployments that truly scale."
   },
   "nav": {
     "services": "Services",
@@ -10,26 +10,30 @@
     "cta": "Book a call"
   },
   "hero": {
-    "kicker": "Professional code industry",
-    "headline": "Architecture & software that truly scales",
-    "sub": "Robust backends, microservices and cloud for products that sell: POS, e‑commerce and data platforms.",
-    "primary": "Talk to us",
+    "kicker": "Professional Code Industry",
+    "headline": "From concept to cloud: software that scales with you",
+    "sub": "From simple apps to complex platforms: robust backends, microservices and cloud to power your business in POS, e-commerce and data.",
+    "primary": "Request a project",
     "secondary": "View services"
   },
   "services": {
     "title": "Services",
     "a": {
       "title": "Architecture & Cloud",
-      "desc": "Blueprints, K8s, CI/CD, observability and cost control."
+      "desc": "Architecture design and deployment: Blueprints, Kubernetes, CI/CD, observability and cost optimization."
     },
     "b": {
       "title": "Robust Backends",
-      "desc": "Modular APIs in NestJS/FastAPI/Go. PostgreSQL, Redis, RabbitMQ."
+      "desc": "Modular and scalable APIs in NestJS, FastAPI or Go, integrated with PostgreSQL, Redis and RabbitMQ."
     },
     "c": {
       "title": "Products that Sell",
-      "desc": "POS, e‑commerce and web/mobile apps focused on business."
+      "desc": "Market-ready solutions: POS, e-commerce and web/mobile apps focused on delivering results."
     }
+  },
+  "future": {
+    "title": "Moving forward together",
+    "body": "ProCode Ind is a code industry. You bring the problem; we provide the infrastructure, processes and technical focus to build software solutions that scale with you."
   },
   "contact": {
     "title": "Contact",
@@ -39,7 +43,7 @@
     "send": "Send"
   },
   "footer": {
-    "col1": "Architecture, custom development and cloud.",
+    "col1": "From idea to product: architecture, development and cloud for projects of any scale.",
     "col2": "Services",
     "col3": "Contact",
     "loc": "Colombia · Remote LATAM/US",

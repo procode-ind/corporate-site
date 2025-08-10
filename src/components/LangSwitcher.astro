@@ -1,7 +1,76 @@
 ---
 import type { Locale } from '../i18n';
-const { lang = 'en' } = Astro.props as { lang?: Locale };
-const other = lang === 'en' ? 'es' : 'en';
+const { lang = 'es' } = Astro.props as { lang?: Locale };
+const hash = Astro.url.hash || '';
+
+const items = [
+  { code: 'es', label: 'Español', href: '/es' },
+  { code: 'en', label: 'English', href: '/en' },
+];
 ---
 
-<a href={`/${other}`} class="btn-ghost text-sm">{other.toUpperCase()}</a>
+<div class="flex gap-2">
+  {
+    items.map((item) => {
+      const href = item.href + hash;
+      const isActive = lang === item.code;
+      return (
+        <a
+          href={href}
+          aria-label={item.label}
+          title={item.label}
+          class={`hover:ring-primary inline-flex rounded border p-1 transition hover:ring-2 ${
+            isActive ? 'ring-primary ring-2' : ''
+          }`}
+        >
+          {item.code === 'es' && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="16"
+              viewBox="0 0 24 16"
+              role="img"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <rect width="24" height="16" fill="#c60b1e" />
+              <rect y="4" width="24" height="8" fill="#ffc400" />
+              <circle cx="6" cy="8" r="3" fill="#c60b1e" />
+              <circle cx="6" cy="8" r="2" fill="#ffc400" />
+            </svg>
+          )}
+          {item.code === 'en' && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="16"
+              viewBox="0 0 24 16"
+              role="img"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <rect width="24" height="16" fill="#b22234" />
+              <g fill="#fff">
+                <rect y="2" width="24" height="2" />
+                <rect y="6" width="24" height="2" />
+                <rect y="10" width="24" height="2" />
+                <rect y="14" width="24" height="2" />
+              </g>
+              <rect width="10" height="7" fill="#3c3b6e" />
+              <g fill="#fff" transform="translate(1 1)">
+                <circle cx="1" cy="1" r="0.8" />
+                <circle cx="3" cy="1" r="0.8" />
+                <circle cx="5" cy="1" r="0.8" />
+                <circle cx="7" cy="1" r="0.8" />
+                <circle cx="2" cy="3" r="0.8" />
+                <circle cx="4" cy="3" r="0.8" />
+                <circle cx="6" cy="3" r="0.8" />
+                <circle cx="8" cy="3" r="0.8" />
+              </g>
+            </svg>
+          )}
+        </a>
+      );
+    })
+  }
+</div>

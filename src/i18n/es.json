@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "ProCode Ind — Industria profesional de código",
-    "description": "Arquitectura, software a la medida y despliegues cloud que sí escalan."
+    "description": "Soluciones tecnológicas a tu medida: desde aplicaciones simples hasta arquitecturas empresariales complejas, con despliegues cloud que escalan de verdad."
   },
   "nav": {
     "services": "Servicios",
@@ -10,25 +10,29 @@
     "cta": "Agenda una llamada"
   },
   "hero": {
-    "kicker": "Industria profesional de código",
-    "headline": "Arquitectura y software que sí escala",
-    "sub": "Backends robustos, microservicios y nube para productos que venden: POS, e‑commerce y plataformas de datos.",
-    "primary": "Hablemos",
+    "kicker": "Industria Profesional de Código",
+    "headline": "Del concepto a la nube: software que escala contigo",
+    "sub": "Desde apps sencillas hasta plataformas complejas: backends robustos, microservicios y cloud para impulsar tu negocio en POS, e‑commerce y datos.",
+    "primary": "Solicitar un proyecto",
     "secondary": "Ver servicios"
+  },
+  "future": {
+    "title": "Vamos de la mano hacia el futuro",
+    "body": "ProCode Indd es una industria de código. Tú traes el problema; nosotros ponemos la planta, los procesos y el foco técnico para construir soluciones de software que escalen contigo."
   },
   "services": {
     "title": "Servicios",
     "a": {
       "title": "Arquitectura & Cloud",
-      "desc": "Blueprints, K8s, CI/CD, observabilidad y costos."
+      "desc": "Diseño y despliegue de arquitecturas: Blueprints, Kubernetes, CI/CD, observabilidad y optimización de costos."
     },
     "b": {
       "title": "Backends robustos",
-      "desc": "APIs modulares en NestJS/FastAPI/Go. PostgreSQL, Redis, RabbitMQ."
+      "desc": "APIs modulares y escalables en NestJS, FastAPI o Go, integradas con PostgreSQL, Redis y RabbitMQ."
     },
     "c": {
       "title": "Productos que venden",
-      "desc": "POS, e‑commerce y apps enfocadas en negocio."
+      "desc": "Soluciones listas para el mercado: POS, e‑commerce y aplicaciones web/móvil enfocadas en generar resultados."
     }
   },
   "contact": {
@@ -39,7 +43,7 @@
     "send": "Enviar"
   },
   "footer": {
-    "col1": "Arquitectura, desarrollo a la medida y cloud.",
+    "col1": "De la idea al producto: arquitectura, desarrollo y cloud para proyectos de cualquier escala.",
     "col2": "Servicios",
     "col3": "Contacto",
     "loc": "Colombia · Remoto LATAM/US",

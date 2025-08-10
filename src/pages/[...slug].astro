@@ -1,0 +1,204 @@
+---
+// Catch-all route for handling invalid dynamic routes
+// This handles routes like /invalid-lang/ or /es/non-existent-page
+
+import '../styles/global.css';
+
+const SUPPORTED_LANGUAGES = ['es', 'en'] as const;
+const DEFAULT_LANGUAGE = 'es' as const;
+type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
+
+// Get the requested path segments
+const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
+const firstSegment = pathSegments[0] || '';
+
+// Check if first segment is a valid language
+const isValidLanguage = SUPPORTED_LANGUAGES.includes(firstSegment as SupportedLanguage);
+
+// Get browser's preferred language from Accept-Language header
+function detectBrowserLanguage(acceptLanguageHeader: string | null): SupportedLanguage {
+  if (!acceptLanguageHeader) {
+    return DEFAULT_LANGUAGE;
+  }
+
+  const languages = acceptLanguageHeader
+    .split(',')
+    .map((lang) => {
+      const [code, quality = '1'] = lang.trim().split(';q=');
+      return {
+        code: code.split('-')[0].toLowerCase(),
+        quality: parseFloat(quality),
+      };
+    })
+    .sort((a, b) => b.quality - a.quality);
+
+  const preferredLang = languages.find((lang) =>
+    SUPPORTED_LANGUAGES.includes(lang.code as SupportedLanguage),
+  );
+
+  return (preferredLang?.code as SupportedLanguage) || DEFAULT_LANGUAGE;
+}
+
+// Determine redirect strategy
+const acceptLanguage = Astro.request.headers.get('accept-language');
+const detectedLang = detectBrowserLanguage(acceptLanguage);
+const base = import.meta.env.BASE_URL || '/';
+
+let redirectUrl: string;
+let errorType: string;
+
+if (isValidLanguage) {
+  // Valid language but invalid page (e.g., /es/non-existent-page)
+  redirectUrl = `${base}${firstSegment}/`;
+  errorType = 'invalid-page';
+} else {
+  // Invalid language or completely wrong route
+  redirectUrl = `${base}${detectedLang}/`;
+  errorType = 'invalid-route';
+}
+
+// Localized messages
+const messages = {
+  es: {
+    title: 'Página no encontrada',
+    heading: errorType === 'invalid-page' ? 'Página no encontrada' : 'Ruta no válida',
+    description:
+      errorType === 'invalid-page'
+        ? 'Esta página no existe. Te llevamos al inicio.'
+        : 'Esta ruta no es válida. Te redirigimos al sitio principal.',
+    redirecting: 'Redirigiendo...',
+    buttonText: 'Ir al inicio',
+  },
+  en: {
+    title: 'Page not found',
+    heading: errorType === 'invalid-page' ? 'Page not found' : 'Invalid route',
+    description:
+      errorType === 'invalid-page'
+        ? 'This page does not exist. Taking you to the home page.'
+        : 'This route is not valid. Redirecting you to the main site.',
+    redirecting: 'Redirecting...',
+    buttonText: 'Go to home',
+  },
+} as const;
+
+const currentLang = isValidLanguage ? (firstSegment as SupportedLanguage) : detectedLang;
+const message = messages[currentLang];
+
+// Debug info (only in development)
+const isDev = import.meta.env.DEV;
+const debugInfo = isDev
+  ? {
+      requestedUrl: Astro.url.pathname,
+      pathSegments,
+      firstSegment,
+      isValidLanguage,
+      errorType,
+      detectedLang,
+      currentLang,
+      redirectUrl,
+    }
+  : null;
+
+export function getStaticPaths() {
+  // Generate paths for common invalid routes to help with static generation
+  return [
+    { params: { slug: 'about' } },
+    { params: { slug: 'contact' } },
+    { params: { slug: 'services' } },
+    { params: { slug: 'blog' } },
+    { params: { slug: 'fr' } },
+    { params: { slug: 'de' } },
+    { params: { slug: 'pt' } },
+    // Add more common invalid routes as needed
+  ];
+}
+---
+
+<!doctype html>
+<html lang={currentLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{message.title} - ProCode Ind</title>
+    <meta name="description" content={message.description} />
+    <meta http-equiv="refresh" content={`2; url=${redirectUrl}`} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={`https://www.procodeind.com${redirectUrl}`} />
+    <link rel="icon" href="/favicon.svg" />
+
+    <!-- Redirect after 2 seconds -->
+    <script define:vars={{ redirectUrl }}>
+      setTimeout(() => {
+        window.location.replace(redirectUrl);
+      }, 2000);
+    </script>
+  </head>
+  <body
+    class="flex min-h-screen items-center justify-center bg-gradient-to-br from-orange-900 via-red-800 to-black font-sans text-white"
+  >
+    <div class="mx-4 max-w-lg rounded-xl bg-white/10 p-8 text-center shadow-2xl backdrop-blur-lg">
+      <!-- Warning Icon -->
+      <div class="mb-6 text-6xl">⚠️</div>
+
+      <h1 class="mb-4 text-3xl font-bold text-orange-300">{message.heading}</h1>
+      <p class="mb-6 leading-relaxed text-white/90">
+        {message.description}
+      </p>
+
+      <!-- Redirect info -->
+      <div class="mb-6 rounded-lg border border-orange-400/30 bg-orange-500/20 p-4">
+        <div
+          class="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-orange-300/30 border-t-orange-300"
+        >
+        </div>
+        <span class="text-orange-200">{message.redirecting}</span>
+      </div>
+
+      <a
+        href={redirectUrl}
+        class="inline-block rounded-lg bg-orange-600 px-6 py-3 text-white no-underline transition-all duration-300 hover:bg-orange-500 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+      >
+        {message.buttonText} →
+      </a>
+
+      {/* Debug info in development */}
+      {
+        debugInfo && (
+          <details class="mt-8 rounded-lg bg-black/20 p-4 text-left text-xs">
+            <summary class="cursor-pointer font-mono text-yellow-300">
+              🐛 Debug Info (Dev Mode)
+            </summary>
+            <div class="mt-2 space-y-1 font-mono text-white/80">
+              <div>
+                <strong>Requested URL:</strong> {debugInfo.requestedUrl}
+              </div>
+              <div>
+                <strong>Path Segments:</strong> [{debugInfo.pathSegments.join(', ')}]
+              </div>
+              <div>
+                <strong>First Segment:</strong> "{debugInfo.firstSegment}"
+              </div>
+              <div>
+                <strong>Is Valid Language:</strong> {debugInfo.isValidLanguage ? 'Yes' : 'No'}
+              </div>
+              <div>
+                <strong>Error Type:</strong> {debugInfo.errorType}
+              </div>
+              <div>
+                <strong>Detected Lang:</strong>{' '}
+                <span class="text-green-300">{debugInfo.detectedLang}</span>
+              </div>
+              <div>
+                <strong>Current Lang:</strong>{' '}
+                <span class="text-blue-300">{debugInfo.currentLang}</span>
+              </div>
+              <div>
+                <strong>Redirect URL:</strong> {debugInfo.redirectUrl}
+              </div>
+            </div>
+          </details>
+        )
+      }
+    </div>
+  </body>
+</html>

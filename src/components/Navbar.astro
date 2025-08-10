@@ -2,7 +2,7 @@
 import type { Locale } from '../i18n';
 import { t } from '../i18n';
 import LangSwitcher from './LangSwitcher.astro';
-const { lang = 'en' } = Astro.props as { lang?: Locale };
+const { lang } = Astro.props as { lang?: Locale };
 ---
 
 <header class="sticky top-0 z-50 border-b border-[var(--color-border)] bg-black/30 backdrop-blur">
@@ -11,11 +11,11 @@ const { lang = 'en' } = Astro.props as { lang?: Locale };
       <img src="/logo-no-bg.png" alt="ProCode Ind" class="h-14" />
       <span class="font-semibold">ProCode Ind</span>
     </a>
-    <ul class="hidden items-center gap-6 text-sm text-[var(--color-muted)] md:flex">
+    <!-- <ul class="hidden items-center gap-6 text-sm text-[var(--color-muted)] md:flex">
       <li><a href={`/${lang}#services`} class="hover:text-white">{t(lang, 'nav.services')}</a></li>
       <li><a href={`/${lang}#projects`} class="hover:text-white">{t(lang, 'nav.projects')}</a></li>
       <li><a href={`/${lang}#contact`} class="hover:text-white">{t(lang, 'nav.contact')}</a></li>
-    </ul>
+    </ul> -->
     <div class="flex items-center gap-3">
       <a href={`/${lang}#contact`} class="btn-ghost">{t(lang, 'nav.cta')}</a>
       <LangSwitcher {lang} />

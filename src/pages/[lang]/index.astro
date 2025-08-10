@@ -1,0 +1,99 @@
+---
+import type { Locale } from '../../i18n';
+import Navbar from '../../components/Navbar.astro';
+import Hero from '../../components/Hero.astro';
+import Footer from '../../components/Footer.astro';
+import FutureBanner from '../../components/FutureBanner.astro';
+
+import '../../styles/global.css';
+import Services from '../../components/Services.astro';
+
+const {
+  title = 'ProCode Ind',
+  description = 'Industria profesional de código: vamos de la mano hacia el futuro—plataformas, líneas de producción de software y consultoría estratégica en cloud, k8s, blockchain y AI.',
+} = Astro.props as { lang?: Locale; title?: string; description?: string };
+
+const base = 'https://www.procodeind.com';
+const alternates = {
+  en: `${base}/en`,
+  es: `${base}/es`,
+};
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'es' } }, { params: { lang: 'en' } }];
+}
+
+const { lang } = Astro.params;
+---
+
+<html {lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" />
+    <!-- hreflang -->
+    <link rel="alternate" href={alternates.en} hreflang="en" />
+    <link rel="alternate" href={alternates.es} hreflang="es" />
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <Navbar {lang} />
+    <main>
+      <Hero {lang} />
+      <FutureBanner lang={lang as Locale} />
+      <Services lang={lang as Locale} />
+      <section class="mx-auto max-w-6xl px-4 py-16">
+        <h2 class="mb-8 text-center text-3xl font-extrabold tracking-tight">
+          Qué hacemos (modo industria)
+        </h2>
+        <div class="grid gap-6 md:grid-cols-3">
+          <div class="rounded-xl border p-6">
+            <h3 class="text-xl font-semibold">Arquitectura & Plataforma</h3>
+            <p class="mt-2 opacity-80">
+              Diseñamos plataformas, estándares y pipelines para escalar productos multi-tenant,
+              cloud‑native y seguros.
+            </p>
+          </div>
+          <div class="rounded-xl border p-6">
+            <h3 class="text-xl font-semibold">Fábrica de productos</h3>
+            <p class="mt-2 opacity-80">
+              Construimos líneas de producción de software con CI/CD, QA automatizada y
+              observabilidad desde el día uno.
+            </p>
+          </div>
+          <div class="rounded-xl border p-6">
+            <h3 class="text-xl font-semibold">Consultoría estratégica</h3>
+            <p class="mt-2 opacity-80">
+              Intervenciones de alto impacto en arquitectura, performance, costos en cloud y
+              modernización.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="mx-auto max-w-4xl px-4 py-16 text-center">
+        <h2 class="text-3xl font-extrabold tracking-tight">Hablemos de tu plataforma</h2>
+        <p class="mx-auto mt-3 max-w-2xl opacity-80">
+          Construyamos juntos una plataforma lista para el futuro: cloud‑native, observable y con
+          automatización de punta a punta.
+        </p>
+        <div class="mt-6">
+          <a
+            href="/contact"
+            class="inline-block rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-500"
+            >Agendar reunión</a
+          >
+        </div>
+      </section>
+    </main>
+    <Footer {lang} />
+  </body>
+</html>

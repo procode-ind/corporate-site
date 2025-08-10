@@ -1,7 +1,8 @@
 ---
+// 404 page that redirects to language detection fallback
+// This handles invalid routes and redirects users to the main site
+
 import '../styles/global.css';
-// Language detection and redirect fallback
-// This page handles users who visit the root without a language parameter
 
 const SUPPORTED_LANGUAGES = ['es', 'en'] as const;
 const DEFAULT_LANGUAGE = 'es' as const;
@@ -19,11 +20,11 @@ function detectBrowserLanguage(acceptLanguageHeader: string | null): SupportedLa
     .map((lang) => {
       const [code, quality = '1'] = lang.trim().split(';q=');
       return {
-        code: code.split('-')[0].toLowerCase(), // Extract primary language code
+        code: code.split('-')[0].toLowerCase(),
         quality: parseFloat(quality),
       };
     })
-    .sort((a, b) => b.quality - a.quality); // Sort by quality preference
+    .sort((a, b) => b.quality - a.quality);
 
   // Find first supported language
   const preferredLang = languages.find((lang) =>
@@ -37,27 +38,38 @@ function detectBrowserLanguage(acceptLanguageHeader: string | null): SupportedLa
 const acceptLanguage = Astro.request.headers.get('accept-language');
 const preferredLang = detectBrowserLanguage(acceptLanguage);
 const base = import.meta.env.BASE_URL || '/';
-const targetUrl = `${base}${preferredLang}/`;
-const canonicalUrl = `https://www.procodeind.com/${preferredLang}/`;
+const homeUrl = `${base}${preferredLang}/`;
+
+// Localized 404 messages
+const messages = {
+  es: {
+    title: 'Página no encontrada',
+    heading: '¡Oops! Página no encontrada',
+    description: 'La página que buscas no existe o ha sido movida.',
+    redirecting: 'Redirigiendo al inicio...',
+    buttonText: 'Ir al inicio',
+  },
+  en: {
+    title: 'Page not found',
+    heading: 'Oops! Page not found',
+    description: 'The page you are looking for does not exist or has been moved.',
+    redirecting: 'Redirecting to home...',
+    buttonText: 'Go to home',
+  },
+} as const;
+
+const message = messages[preferredLang];
 
 // Debug info (only in development)
 const isDev = import.meta.env.DEV;
 const debugInfo = isDev
   ? {
+      requestedUrl: Astro.url.pathname,
       acceptLanguageHeader: acceptLanguage,
       detectedLang: preferredLang,
-      targetUrl,
-      userAgent: Astro.request.headers.get('user-agent')?.substring(0, 100) + '...',
+      redirectUrl: homeUrl,
     }
   : null;
-
-// Localized redirect messages
-const redirectMessages = {
-  es: 'Redirigiendo...',
-  en: 'Redirecting...',
-} as const;
-
-const redirectMessage = redirectMessages[preferredLang];
 ---
 
 <!doctype html>
@@ -65,40 +77,46 @@ const redirectMessage = redirectMessages[preferredLang];
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{redirectMessage}</title>
-    <meta name="description" content="Automatic language detection and redirect" />
-    <meta http-equiv="refresh" content={`0; url=${targetUrl}`} />
+    <title>{message.title} - ProCode Ind</title>
+    <meta name="description" content={message.description} />
+    <meta http-equiv="refresh" content={`3; url=${homeUrl}`} />
     <meta name="robots" content="noindex, nofollow" />
-    <link rel="canonical" href={canonicalUrl} />
+    <link rel="canonical" href={`https://www.procodeind.com${homeUrl}`} />
     <link rel="icon" href="/favicon.svg" />
 
-    <!-- Immediate JavaScript redirect as fallback -->
-    <script define:vars={{ targetUrl }}>
-      // Immediate redirect
-      window.location.replace(targetUrl);
+    <!-- Redirect after 3 seconds -->
+    <script define:vars={{ homeUrl }}>
+      setTimeout(() => {
+        window.location.replace(homeUrl);
+      }, 3000);
     </script>
   </head>
   <body
-    class="flex min-h-screen items-center justify-center bg-gradient-to-br from-black/30 via-black/40 to-black/30 font-sans text-white"
+    class="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black font-sans text-white"
   >
-    <div class="mx-4 max-w-md rounded-xl bg-white/10 p-8 text-center shadow-2xl backdrop-blur-lg">
-      <div
-        class="mr-2 inline-block h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white"
-      >
-      </div>
-      <h1 class="mb-4 text-2xl font-bold">{redirectMessage}</h1>
+    <div class="mx-4 max-w-lg rounded-xl bg-white/10 p-8 text-center shadow-2xl backdrop-blur-lg">
+      <!-- 404 Icon -->
+      <div class="mb-6 text-6xl">🔍</div>
+
+      <h1 class="mb-4 text-3xl font-bold text-red-300">{message.heading}</h1>
       <p class="mb-6 leading-relaxed text-white/90">
-        {
-          preferredLang === 'es'
-            ? 'Si no eres redirigido automáticamente, haz clic en el enlace de abajo.'
-            : 'If you are not redirected automatically, click the link below.'
-        }
+        {message.description}
       </p>
+
+      <!-- Redirect info -->
+      <div class="mb-6 rounded-lg border border-blue-400/30 bg-blue-500/20 p-4">
+        <div
+          class="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-blue-300/30 border-t-blue-300"
+        >
+        </div>
+        <span class="text-blue-200">{message.redirecting}</span>
+      </div>
+
       <a
-        href={targetUrl}
-        class="inline-block rounded-lg border-2 border-white/30 px-6 py-3 text-white no-underline transition-all duration-300 hover:-translate-y-0.5 hover:border-white/60 hover:bg-white/20 focus:ring-2 focus:ring-white/50 focus:outline-none"
+        href={homeUrl}
+        class="inline-block rounded-lg bg-blue-600 px-6 py-3 text-white no-underline transition-all duration-300 hover:bg-blue-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
       >
-        {preferredLang === 'es' ? 'Continuar' : 'Continue'} →
+        {message.buttonText} →
       </a>
 
       {/* Debug info in development */}
@@ -110,6 +128,9 @@ const redirectMessage = redirectMessages[preferredLang];
             </summary>
             <div class="mt-2 space-y-1 font-mono text-white/80">
               <div>
+                <strong>Requested URL:</strong> {debugInfo.requestedUrl}
+              </div>
+              <div>
                 <strong>Accept-Language:</strong> {debugInfo.acceptLanguageHeader || 'null'}
               </div>
               <div>
@@ -117,10 +138,7 @@ const redirectMessage = redirectMessages[preferredLang];
                 <span class="text-green-300">{debugInfo.detectedLang}</span>
               </div>
               <div>
-                <strong>Target URL:</strong> {debugInfo.targetUrl}
-              </div>
-              <div>
-                <strong>User Agent:</strong> {debugInfo.userAgent}
+                <strong>Redirect URL:</strong> {debugInfo.redirectUrl}
               </div>
             </div>
           </details>
