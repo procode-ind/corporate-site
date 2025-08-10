@@ -9,23 +9,19 @@ interface Props {
 
 const { lang = 'es', className = '' } = Astro.props as Props;
 
-// Services data structure for easier maintenance
-const services = [
+// Consulting services data structure for easier maintenance
+const consultingServices = [
   {
-    key: 'beera',
-    icon: '📅',
+    key: 'a',
+    icon: '⚡',
   },
   {
-    key: 'starpos',
-    icon: '🏪',
+    key: 'b',
+    icon: '🚀',
   },
   {
-    key: 'lami',
-    icon: '🚚',
-  },
-  {
-    key: 'klipgen',
-    icon: '🎬',
+    key: 'c',
+    icon: '💰',
   },
 ] as const;
 
@@ -35,21 +31,21 @@ const sectionClasses = `mx-auto max-w-6xl px-4 py-16 ${className}`.trim();
 
 <section class={sectionClasses}>
   <h2 class="mb-8 text-center text-3xl font-extrabold tracking-tight text-white">
-    {t(lang, 'services.title')}
+    {t(lang, 'consulting.title')}
   </h2>
-  <div class="grid gap-6 md:grid-cols-4">
+  <div class="grid gap-6 md:grid-cols-3">
     {
-      services.map((service) => (
+      consultingServices.map((service) => (
         <div class="card p-6 transition-all duration-300 hover:scale-105 hover:bg-white/10">
           <div class="mb-3 flex items-center gap-3">
             <span class="text-2xl" role="img" aria-hidden="true">
               {service.icon}
             </span>
             <h3 class="text-xl font-semibold text-white">
-              {t(lang, `services.${service.key}.title`)}
+              {t(lang, `consulting.${service.key}.title`)}
             </h3>
           </div>
-          <p class="leading-relaxed text-white/80">{t(lang, `services.${service.key}.desc`)}</p>
+          <p class="leading-relaxed text-white/80">{t(lang, `consulting.${service.key}.desc`)}</p>
         </div>
       ))
     }

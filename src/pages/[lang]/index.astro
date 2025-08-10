@@ -7,6 +7,7 @@ import FutureBanner from '../../components/FutureBanner.astro';
 
 import '../../styles/global.css';
 import Services from '../../components/Services.astro';
+import Consulting from '../../components/Consulting.astro';
 import Contact from '../../components/Contact.astro';
 import Industries from '../../components/Industries.astro';
 import CTA from '../../components/CTA.astro';
@@ -49,9 +50,10 @@ const { lang } = Astro.params;
   <body class="flex min-h-screen flex-col">
     <Navbar {lang} />
     <main>
-      <Hero {lang} />
+      <Hero lang={lang as Locale} />
       <FutureBanner lang={lang as Locale} />
       <Services lang={lang as Locale} />
+      <Consulting lang={lang as Locale} />
       <Industries lang={lang as Locale} />
       <CTA lang={lang as Locale} />
     </main>

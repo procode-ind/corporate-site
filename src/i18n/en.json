@@ -23,6 +23,25 @@
     }
   },
   "services": {
+    "title": "Products operated by ProCode Ind",
+    "beera": {
+      "title": "Beera",
+      "desc": "Multi-purpose reservations and resource management."
+    },
+    "starpos": {
+      "title": "StarPOS Cloud",
+      "desc": "Multi-tenant POS with intelligent inventory."
+    },
+    "lami": {
+      "title": "Lami Hub",
+      "desc": "Optimized last-mile logistics."
+    },
+    "klipgen": {
+      "title": "Klipgen",
+      "desc": "Multimedia content automation."
+    }
+  },
+  "consulting": {
     "title": "Services",
     "a": {
       "title": "Architecture & Cloud",
@@ -38,7 +57,7 @@
     }
   },
   "industries": {
-    "title": "What we do (industry mode)",
+    "title": "What we do",
     "architecture": {
       "title": "Architecture & Platform",
       "desc": "We design platforms, standards and pipelines to scale multi-tenant, cloud-native and secure products."

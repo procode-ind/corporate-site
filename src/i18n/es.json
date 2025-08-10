@@ -7,7 +7,7 @@
     "services": "Servicios",
     "projects": "Proyectos",
     "contact": "Contacto",
-    "cta": "Agenda una llamada"
+    "cta": "Agenda llamada"
   },
   "hero": {
     "kicker": "Industria Profesional de Código",
@@ -19,7 +19,7 @@
       "years": "Años de Experiencia",
       "projects": "Proyectos", 
       "support": "Soporte",
-      "uptime": "Uptime"
+      "uptime": "Disponibilidad"
     }
   },
   "future": {
@@ -27,6 +27,25 @@
     "body": "ProCode Indd es una industria de código. Tú traes el problema; nosotros ponemos la planta, los procesos y el foco técnico para construir soluciones de software que escalen contigo."
   },
   "services": {
+    "title": "Productos operados por ProCode Ind",
+    "beera": {
+      "title": "Beera",
+      "desc": "Reservas multiuso y gestión de recursos empresariales."
+    },
+    "starpos": {
+      "title": "StarPOS Cloud",
+      "desc": "POS multi-tenant con inventario inteligente."
+    },
+    "lami": {
+      "title": "Lami Hub",
+      "desc": "Logística de última milla optimizada."
+    },
+    "klipgen": {
+      "title": "Klipgen",
+      "desc": "Automatización de contenido multimedia."
+    }
+  },
+  "consulting": {
     "title": "Servicios",
     "a": {
       "title": "Arquitectura & Cloud",
@@ -42,7 +61,7 @@
     }
   },
   "industries": {
-    "title": "Qué hacemos (modo industria)",
+    "title": "Qué hacemos",
     "architecture": {
       "title": "Arquitectura & Plataforma",
       "desc": "Diseñamos plataformas, estándares y pipelines para escalar productos multi-tenant, cloud‑native y seguros."
