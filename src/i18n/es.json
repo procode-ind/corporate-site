@@ -12,9 +12,15 @@
   "hero": {
     "kicker": "Industria Profesional de Código",
     "headline": "Del concepto a la nube: software que escala contigo",
-    "sub": "Desde apps sencillas hasta plataformas complejas: backends robustos, microservicios y cloud para impulsar tu negocio en POS, e‑commerce y datos.",
-    "primary": "Solicitar un proyecto",
-    "secondary": "Ver servicios"
+    "sub": "Desde apps sencillas hasta plataformas complejas: soluciones robustas, microservicios y cloud para impulsar tu negocio en fintech, SaaS, IA y ecosistemas digitales.",
+    "primary": "Solicitar proyecto",
+    "secondary": "Ver servicios",
+    "stats": {
+      "years": "Años de Experiencia",
+      "projects": "Proyectos", 
+      "support": "Soporte",
+      "uptime": "Uptime"
+    }
   },
   "future": {
     "title": "Vamos de la mano hacia el futuro",
@@ -27,8 +33,8 @@
       "desc": "Diseño y despliegue de arquitecturas: Blueprints, Kubernetes, CI/CD, observabilidad y optimización de costos."
     },
     "b": {
-      "title": "Backends robustos",
-      "desc": "APIs modulares y escalables en NestJS, FastAPI o Go, integradas con PostgreSQL, Redis y RabbitMQ."
+      "title": "Desarrollo Full-Stack",
+      "desc": "Soluciones completas web y móvil: interfaces modernas, APIs escalables y bases de datos robustas integradas con las últimas tecnologías."
     },
     "c": {
       "title": "Productos que venden",

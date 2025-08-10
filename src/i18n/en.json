@@ -12,9 +12,15 @@
   "hero": {
     "kicker": "Professional Code Industry",
     "headline": "From concept to cloud: software that scales with you",
-    "sub": "From simple apps to complex platforms: robust backends, microservices and cloud to power your business in POS, e-commerce and data.",
-    "primary": "Request a project",
-    "secondary": "View services"
+    "sub": "From simple apps to complex platforms: robust backends, microservices and cloud to power your business in fintech, SaaS, AI and digital ecosystems.",
+    "primary": "Request project",
+    "secondary": "View services",
+    "stats": {
+      "years": "Years of Experience",
+      "projects": "Projects",
+      "support": "Support", 
+      "uptime": "Uptime"
+    }
   },
   "services": {
     "title": "Services",
@@ -23,8 +29,8 @@
       "desc": "Architecture design and deployment: Blueprints, Kubernetes, CI/CD, observability and cost optimization."
     },
     "b": {
-      "title": "Robust Backends",
-      "desc": "Modular and scalable APIs in NestJS, FastAPI or Go, integrated with PostgreSQL, Redis and RabbitMQ."
+      "title": "Full-Stack Development",
+      "desc": "Complete web and mobile solutions: modern frontends, scalable APIs, and robust databases integrated with the latest technologies."
     },
     "c": {
       "title": "Products that Sell",

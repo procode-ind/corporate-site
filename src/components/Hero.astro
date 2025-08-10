@@ -1,32 +1,124 @@
 ---
+import type { Locale } from '../i18n';
 import { t } from '../i18n';
 
-const { lang } = Astro.props;
+interface Props {
+  lang?: Locale;
+  backgroundImage?: string;
+  className?: string;
+}
+
+const { lang = 'es', backgroundImage = '/hero-banner.jpeg', className = '' } = Astro.props as Props;
+
+// Hero statistics configuration
+const heroStats = [
+  { value: '10+', key: 'years' },
+  { value: '50+', key: 'projects' },
+  { value: '24/7', key: 'support' },
+  { value: '99%', key: 'uptime' },
+] as const;
+
+// Construct classes
+const sectionClasses =
+  `relative min-h-screen flex items-center justify-center text-white ${className}`.trim();
 ---
 
-<section
-  class="relative py-20 text-white"
-  style="background-image: url('/hero-banner.jpeg'); background-size: cover; background-position: center;"
->
-  <div class="absolute inset-0 bg-black/60"></div>
-  <div class="relative mx-auto max-w-6xl px-4 text-center">
-    <h1 class="text-4xl font-bold md:text-6xl">{t(lang, 'hero.kicker')}</h1>
-    <p class="mt-4 text-lg opacity-80 md:text-xl">
-      {t(lang, 'hero.sub')}
-    </p>
-    <div class="mt-8 flex justify-center gap-4">
-      <a
-        href="/contact"
-        class="rounded-lg bg-blue-600 px-6 py-3 font-medium transition hover:bg-blue-500"
-      >
-        {t(lang, 'hero.primary')}
-      </a>
-      <!-- <a
-        href="/products"
-        class="rounded-lg border border-white px-6 py-3 font-medium transition hover:bg-white hover:text-black"
-      >
-        Conocer nuestras apps
-      </a> -->
+<section class={sectionClasses}>
+  <!-- Background Layer -->
+  <div class="absolute inset-0 overflow-hidden">
+    <img
+      src={backgroundImage}
+      alt=""
+      class="h-full w-full object-cover object-center"
+      loading="eager"
+      decoding="async"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black/70"></div>
+    <div
+      class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:32px_32px] opacity-10"
+    >
     </div>
+  </div>
+
+  <!-- Hero Content -->
+  <div class="container-xl relative z-10">
+    <div class="mx-auto max-w-5xl text-center">
+      <!-- Kicker Badge -->
+      <div class="mb-6">
+        <span
+          class="inline-block rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white/90 backdrop-blur-sm"
+        >
+          {t(lang, 'hero.kicker')}
+        </span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-5xl font-extrabold tracking-tight md:text-7xl lg:text-8xl">
+        <span
+          class="block bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent"
+        >
+          {t(lang, 'hero.headline')}
+        </span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p
+        class="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-white/90 md:text-xl lg:text-2xl"
+      >
+        {t(lang, 'hero.sub')}
+      </p>
+
+      <!-- Call to Action Button -->
+      <div class="mt-10 flex justify-center">
+        <a
+          href="#contact"
+          class="btn-primary group inline-flex min-w-[200px] items-center justify-center gap-3 text-white transition-all duration-300 hover:scale-105 focus:scale-105"
+        >
+          <span>{t(lang, 'hero.primary')}</span>
+          <svg
+            class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Trust Indicators / Statistics -->
+      <div class="mt-16 grid grid-cols-2 gap-8 md:grid-cols-4">
+        {
+          heroStats.map((stat) => (
+            <div class="text-center">
+              <div class="text-2xl font-bold text-white md:text-3xl">{stat.value}</div>
+              <div class="mt-1 text-sm text-white/70">{t(lang, `hero.stats.${stat.key}`)}</div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 transform animate-bounce">
+    <svg
+      class="h-6 w-6 text-white/60"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+    </svg>
   </div>
 </section>
