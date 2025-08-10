@@ -37,10 +37,15 @@
   },
   "contact": {
     "title": "Contact",
+    "desc": "Have a project in mind? Let's talk about how we can help you build the perfect solution.",
     "name": "Name",
     "email": "Email",
     "msg": "What do you need?",
-    "send": "Send"
+    "send": "Send message",
+    "sending": "Sending...",
+    "success": "Message sent successfully! We'll contact you soon.",
+    "error": "Error sending message. Please try again.",
+    "privacy": "By submitting you accept that we contact you regarding your request."
   },
   "footer": {
     "col1": "From idea to product: architecture, development and cloud for projects of any scale.",
