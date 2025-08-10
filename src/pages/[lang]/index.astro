@@ -10,7 +10,6 @@ import Services from '../../components/Services.astro';
 import Consulting from '../../components/Consulting.astro';
 import Contact from '../../components/Contact.astro';
 import Industries from '../../components/Industries.astro';
-import CTA from '../../components/CTA.astro';
 
 const {
   title = 'ProCode Ind',
@@ -55,7 +54,6 @@ const { lang } = Astro.params;
       <Services lang={lang as Locale} />
       <Consulting lang={lang as Locale} />
       <Industries lang={lang as Locale} />
-      <CTA lang={lang as Locale} />
     </main>
     <Contact {lang} />
     <Footer {lang} />

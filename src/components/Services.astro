@@ -13,19 +13,23 @@ const { lang = 'es', className = '' } = Astro.props as Props;
 const services = [
   {
     key: 'beera',
-    icon: '📅',
+    icon: '/beera-no-bg.png',
+    type: 'image',
   },
   {
     key: 'starpos',
-    icon: '🏪',
+    icon: '/starpos-no-bg.png',
+    type: 'image',
   },
   {
     key: 'lami',
-    icon: '🚚',
+    icon: '/lami-no-bg.png',
+    type: 'image',
   },
   {
     key: 'klipgen',
     icon: '🎬',
+    type: 'emoji',
   },
 ] as const;
 
@@ -42,9 +46,18 @@ const sectionClasses = `mx-auto max-w-6xl px-4 py-16 ${className}`.trim();
       services.map((service) => (
         <div class="card p-6 transition-all duration-300 hover:scale-105 hover:bg-white/10">
           <div class="mb-3 flex items-center gap-3">
-            <span class="text-2xl" role="img" aria-hidden="true">
-              {service.icon}
-            </span>
+            {service.type === 'image' ? (
+              <img
+                src={service.icon}
+                alt={`${service.key} logo`}
+                class="h-8 w-8 object-contain"
+                loading="lazy"
+              />
+            ) : (
+              <span class="text-2xl" role="img" aria-hidden="true">
+                {service.icon}
+              </span>
+            )}
             <h3 class="text-xl font-semibold text-white">
               {t(lang, `services.${service.key}.title`)}
             </h3>
