@@ -10,7 +10,7 @@ interface Props {
 const { lang = 'es', className = '' } = Astro.props as Props;
 
 // Services data structure for easier maintenance
-const services = [
+/*const services = [
   {
     key: 'beera',
     icon: '/beera-no-bg.png',
@@ -31,7 +31,8 @@ const services = [
     icon: '🎬',
     type: 'emoji',
   },
-] as const;
+] as const;*/
+const services = [] as const
 
 // Construct section classes
 const sectionClasses = `mx-auto max-w-6xl px-4 py-16 ${className}`.trim();
