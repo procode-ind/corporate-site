@@ -1,131 +1,424 @@
 ---
-import '../styles/global.css';
-// Language detection and redirect fallback
-// This page handles users who visit the root without a language parameter
-
-const SUPPORTED_LANGUAGES = ['es', 'en'] as const;
-const DEFAULT_LANGUAGE = 'es' as const;
-type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
-
-// Get browser's preferred language from Accept-Language header
-function detectBrowserLanguage(acceptLanguageHeader: string | null): SupportedLanguage {
-  if (!acceptLanguageHeader) {
-    return DEFAULT_LANGUAGE;
-  }
-
-  // Parse Accept-Language header and find best match
-  const languages = acceptLanguageHeader
-    .split(',')
-    .map((lang) => {
-      const [code, quality = '1'] = lang.trim().split(';q=');
-      return {
-        code: code.split('-')[0].toLowerCase(), // Extract primary language code
-        quality: parseFloat(quality),
-      };
-    })
-    .sort((a, b) => b.quality - a.quality); // Sort by quality preference
-
-  // Find first supported language
-  const preferredLang = languages.find((lang) =>
-    SUPPORTED_LANGUAGES.includes(lang.code as SupportedLanguage),
-  );
-
-  return (preferredLang?.code as SupportedLanguage) || DEFAULT_LANGUAGE;
-}
-
-// Detect user's preferred language from request headers
-const acceptLanguage = Astro.request.headers.get('accept-language');
-const preferredLang = detectBrowserLanguage(acceptLanguage);
-const base = import.meta.env.BASE_URL || '/';
-const targetUrl = `${base}${preferredLang}/`;
-const canonicalUrl = `https://www.procodeind.com/${preferredLang}/`;
-
-// Debug info (only in development)
-const isDev = import.meta.env.DEV;
-const debugInfo = isDev
-  ? {
-      acceptLanguageHeader: acceptLanguage,
-      detectedLang: preferredLang,
-      targetUrl,
-      userAgent: Astro.request.headers.get('user-agent')?.substring(0, 100) + '...',
-    }
-  : null;
-
-// Localized redirect messages
-const redirectMessages = {
-  es: 'Redirigiendo...',
-  en: 'Redirecting...',
-} as const;
-
-const redirectMessage = redirectMessages[preferredLang];
+const title = 'ProCode Ind';
+const description =
+  'ProCode Ind is an AI engineering workshop in Cartagena, Colombia. We build JATRIX and CondorPay in the open and share what we learn.';
+const url = 'https://www.procodeind.com/';
 ---
 
-<!doctype html>
-<html lang={preferredLang}>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{redirectMessage}</title>
-    <meta name="description" content="Automatic language detection and redirect" />
-    <meta http-equiv="refresh" content={`0; url=${targetUrl}`} />
-    <meta name="robots" content="noindex, nofollow" />
-    <link rel="canonical" href={canonicalUrl} />
-    <link rel="icon" href="/favicon.svg" />
-
-    <!-- Immediate JavaScript redirect as fallback -->
-    <script define:vars={{ targetUrl }}>
-      // Immediate redirect
-      window.location.replace(targetUrl);
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta name="theme-color" content="#1e1e1e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f6f5f4" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Ubuntu+Mono:wght@400;700&family=Ubuntu+Sans:wght@400;500;600&display=swap"
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
   </head>
-  <body
-    class="flex min-h-screen items-center justify-center bg-gradient-to-br from-black/30 via-black/40 to-black/30 font-sans text-white"
-  >
-    <div class="mx-4 max-w-md rounded-xl bg-white/10 p-8 text-center shadow-2xl backdrop-blur-lg">
-      <div
-        class="mr-2 inline-block h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white"
-      >
+  <body>
+    <header class="top">
+      <div class="wrap bar">
+        <a class="brand" href="#home" aria-label="ProCode Ind, home">
+          <span class="brand-head" id="brand-head" aria-hidden="true">
+            <span class="layer lines"></span><span class="layer crest"></span><span
+              class="layer eye"></span>
+          </span>
+          <span class="brand-name">PI</span>
+        </a>
+        <nav class="links" aria-label="Main">
+          <a href="#notebook">Notebook</a>
+          <a href="#projects">Projects</a>
+          <a class="hide-sm" href="#community">Community</a>
+          <a class="hide-sm" href="#contact">Contact</a>
+        </nav>
       </div>
-      <h1 class="mb-4 text-2xl font-bold">{redirectMessage}</h1>
-      <p class="mb-6 leading-relaxed text-white/90">
-        {
-          preferredLang === 'es'
-            ? 'Si no eres redirigido automáticamente, haz clic en el enlace de abajo.'
-            : 'If you are not redirected automatically, click the link below.'
-        }
-      </p>
-      <a
-        href={targetUrl}
-        class="inline-block rounded-lg border-2 border-white/30 px-6 py-3 text-white no-underline transition-all duration-300 hover:-translate-y-0.5 hover:border-white/60 hover:bg-white/20 focus:ring-2 focus:ring-white/50 focus:outline-none"
-      >
-        {preferredLang === 'es' ? 'Continuar' : 'Continue'} →
-      </a>
+    </header>
 
-      {/* Debug info in development */}
-      {
-        debugInfo && (
-          <details class="mt-8 rounded-lg bg-black/20 p-4 text-left text-xs">
-            <summary class="cursor-pointer font-mono text-yellow-300">
-              🐛 Debug Info (Dev Mode)
-            </summary>
-            <div class="mt-2 space-y-1 font-mono text-white/80">
-              <div>
-                <strong>Accept-Language:</strong> {debugInfo.acceptLanguageHeader || 'null'}
+    <main id="home">
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div class="hero-copy">
+            <span class="label"
+              ><b>jespinel@procodeind</b>:<i>~</i>$ # AI engineering workshop · Cartagena, Colombia</span
+            >
+            <h1>We build open software and <span>share what we learn.</span></h1>
+            <p class="lede">
+              We work on two projects, <strong>JATRIX</strong> and <strong>CondorPay</strong>. We
+              write down every decision before we code it, then publish it with its reasoning and
+              its mistakes, so anyone can learn from it, use it, or make it better.
+            </p>
+            <div class="row">
+              <a class="btn primary" href="#notebook">Read the notebook</a>
+              <a class="btn" href="#community">Get involved</a>
+            </div>
+          </div>
+
+          <aside class="notebook" id="notebook" aria-labelledby="nb-title">
+            <div class="nb-head">
+              <span class="t" id="nb-title">~/notebook</span><span class="c">ls -t</span>
+            </div>
+            <ul class="nb-list">
+              <li>
+                <span class="nb-id">ADR-0012</span><span class="nb-title"
+                  >Control-plane authorization</span
+                ><span class="nb-st acc">accepted</span><span class="nb-proj"
+                  ><span class="j">jatrix</span> · governance</span>
+              </li>
+              <li>
+                <span class="nb-id">ADR-0008</span><span class="nb-title"
+                  >Service-to-service authorization with a delegated subject</span
+                ><span class="nb-st acc">accepted</span><span class="nb-proj"
+                  ><span class="j">jatrix</span> · security</span>
+              </li>
+              <li>
+                <span class="nb-id">ADR-0007</span><span class="nb-title"
+                  >Asymmetric JWT signing and JWKS</span
+                ><span class="nb-st pro">proposed</span><span class="nb-proj"
+                  ><span class="j">jatrix</span> · identity</span>
+              </li>
+              <li>
+                <span class="nb-id">ADR-0004</span><span class="nb-title"
+                  >Billing and subscriptions with Wompi in Colombia</span
+                ><span class="nb-st pro">proposed</span><span class="nb-proj"
+                  ><span class="j">jatrix</span> · billing</span>
+              </li>
+              <li>
+                <span class="nb-id">ADR-0003</span><span class="nb-title"
+                  >Why v1 does not use row-level security</span
+                ><span class="nb-st">decision</span><span class="nb-proj"
+                  ><span class="j">jatrix</span> · data</span>
+              </li>
+              <li>
+                <span class="nb-id">SPEC · co</span><span class="nb-title"
+                  >A Bre-B (EMVCo) QR from scratch: TLV, CRC and matrix</span
+                ><span class="nb-st">spec</span><span class="nb-proj"
+                  ><span class="c">condorpay</span> · payments</span>
+              </li>
+            </ul>
+            <div class="nb-foot">Published on GitHub alongside each project’s code.</div>
+          </aside>
+          <div class="hero-art" aria-hidden="true">
+            <div class="iguana" id="iguana">
+              <div class="part body">
+                <span class="layer lines"></span><span class="layer crest"></span>
               </div>
-              <div>
-                <strong>Detected Lang:</strong>{' '}
-                <span class="text-green-300">{debugInfo.detectedLang}</span>
+              <div class="part tail">
+                <div class="part tail-base">
+                  <span class="layer lines"></span><span class="layer crest"></span>
+                </div>
+                <div class="part tail-tip">
+                  <span class="layer lines"></span><span class="layer crest"></span>
+                </div>
               </div>
-              <div>
-                <strong>Target URL:</strong> {debugInfo.targetUrl}
-              </div>
-              <div>
-                <strong>User Agent:</strong> {debugInfo.userAgent}
+              <div class="part head">
+                <span class="layer lines"></span><span class="layer crest"></span><span
+                  class="layer eye"></span>
               </div>
             </div>
-          </details>
-        )
-      }
-    </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="projects">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="label"><i>~/projects</i>$ ls</span>
+            <div>
+              <h2>Two projects, documented end to end.</h2>
+              <p>
+                Each one solves a problem every SaaS in Latin America runs into sooner or later: who
+                is allowed to do what, and how to get paid.
+              </p>
+            </div>
+          </div>
+
+          <div class="projects">
+            <article class="proj jatrix" aria-labelledby="p-jatrix">
+              <div class="proj-top">
+                <div class="proj-id">
+                  <svg class="mark owl" viewBox="0 0 48 48" aria-hidden="true">
+                    <g class="ln"
+                      ><path d="M8 8L18 14L24 12L30 14L40 8V30L24 42L8 30Z"></path><path
+                        d="M24 12V24M12 17L22 22M36 17L26 22M24 34V42"></path><path
+                        d="M24 25L26.5 29L24 33L21.5 29Z"></path></g
+                    >
+                    <g class="eyes"
+                      ><rect x="15" y="20" width="5" height="5"></rect><rect
+                        x="28"
+                        y="20"
+                        width="5"
+                        height="5"></rect></g
+                    >
+                  </svg>
+                  <div>
+                    <div class="proj-name" id="p-jatrix">JATRIX</div>
+                    <div class="proj-kind">Governance for multi-tenant SaaS</div>
+                  </div>
+                </div>
+                <div class="tags">
+                  <span class="tag">Go</span><span class="tag">API /v1</span><span class="tag"
+                    >PostgreSQL</span>
+                </div>
+              </div>
+              <p>
+                Identity, organizations, tenants, per-product roles and entitlements in one service.
+                Your product keeps its business logic; JATRIX decides who can do what and records
+                every change.
+              </p>
+              <div class="learn">
+                <span class="label">What you can learn here</span>
+                <ul>
+                  <li>How to isolate tenants in a shared schema</li>
+                  <li>Per-product permissions with no inheritance and no surprises</li>
+                  <li>Auditing in the same transaction as the change</li>
+                </ul>
+              </div>
+              <div class="code">
+                <pre><span class="cm"># can this user do this, in this tenant, in this product?</span>
+    <span class="k">POST</span> /v1/organizations/&#123;orgId&#125;/authorize</pre>
+              </div>
+              <div class="proj-foot">
+                <a class="btn" href="https://jatrix.cloud" target="_blank" rel="noopener"
+                  >Documentation ↗</a
+                >
+              </div>
+            </article>
+
+            <article class="proj condor" aria-labelledby="p-condor">
+              <div class="proj-top">
+                <div class="proj-id">
+                  <svg class="mark condor" viewBox="0 0 48 48" aria-hidden="true">
+                    <g class="ln wing wl"
+                      ><path d="M20 24L10 18L2 17L8 21L3 25L10 26L7 30L16 28L20 27"></path></g
+                    >
+                    <g class="ln wing wr"
+                      ><path d="M28 24L38 18L46 17L40 21L45 25L38 26L41 30L32 28L28 27"></path></g
+                    >
+                    <g class="ln"
+                      ><path d="M20 24V34L24 38L28 34V24M22 38L24 42L26 38"></path><path
+                        d="M21.5 21.5L21 15L24 12L28 13L31 16L28 17L26 16V21.5"></path></g
+                    >
+                    <g class="ruff"><path d="M19 24L21 21.5L23 24L25 21.5L27 24L29 21.5"></path></g>
+                  </svg>
+                  <div>
+                    <div class="proj-name" id="p-condor">CONDORPAY</div>
+                    <div class="proj-kind">Instant payments for Latin America</div>
+                  </div>
+                </div>
+                <div class="tags">
+                  <span class="tag">MIT</span><span class="tag">TypeScript</span><span class="tag"
+                    >Node 20+</span>
+                </div>
+              </div>
+              <p>
+                An open SDK for collecting payments over the region’s instant payment rails. It
+                starts in Colombia with Bre-B QR codes and Wompi, and plugs into Medusa.
+              </p>
+              <table class="pkgs" aria-label="Packages published on npm">
+                <tbody>
+                  <tr><td>@condorpay/sdk</td><td>0.1.6</td></tr>
+                  <tr><td>@condorpay/co</td><td>0.3.0</td></tr>
+                  <tr><td>@condorpay/medusa</td><td>2.0.0</td></tr>
+                  <tr
+                    ><td class="soon">Brazil · Mexico · United States</td><td class="soon"
+                      >in progress</td
+                    ></tr
+                  >
+                </tbody>
+              </table>
+              <div class="code">
+                <pre><span class="k">import</span> &#123; CondorPay &#125; <span class="k">from</span> <span class="s">"@condorpay/sdk"</span>;
+
+    <span class="k">const</span> cp = <span class="k">new</span> CondorPay(&#123; country: <span class="s">"co"</span>, wompi: &#123; publicKey, privateKey &#125; &#125;);
+    <span class="k">const</span> qr = cp.co.generateQr(&#123; merchantName: <span class="s">"My Store"</span>, merchantCity: <span class="s">"Cartagena"</span>, merchantAccountId &#125;);</pre>
+              </div>
+              <div class="proj-foot">
+                <div class="copyrow" style="flex:1">
+                  <code id="npm-cmd">npm install @condorpay/sdk</code>
+                  <button type="button" data-copy="npm-cmd">Copy</button>
+                </div>
+                <a
+                  class="btn"
+                  href="https://www.npmjs.com/package/@condorpay/sdk"
+                  target="_blank"
+                  rel="noopener">npm ↗</a
+                >
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" aria-labelledby="pr-title">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="label"><i>~/rules</i>$ cat PRINCIPLES.md</span>
+            <div>
+              <h2 id="pr-title">Six rules we apply to everything we make.</h2>
+              <p>
+                They are written into each project’s specification. If a rule changes, the document
+                changes first.
+              </p>
+            </div>
+          </div>
+          <div class="principles">
+            <div class="pr">
+              <span class="k">spec → code</span><h3>Write it down, then build it</h3><p>
+                Every structural change goes through an ADR. The specification is the source of
+                truth.
+              </p>
+            </div>
+            <div class="pr">
+              <span class="k">tenant_id</span><h3>Isolation by default</h3><p>
+                Every query filters by organization and tenant. Context comes from the token, never
+                from the request body.
+              </p>
+            </div>
+            <div class="pr">
+              <span class="k">audit_log</span><h3>Everything leaves a trail</h3><p>
+                Every state change is recorded in the same transaction that makes it.
+              </p>
+            </div>
+            <div class="pr">
+              <span class="k">OpenTelemetry</span><h3>Everything is observable</h3><p>
+                Every signal carries organization, tenant, product, user and request_id.
+              </p>
+            </div>
+            <div class="pr">
+              <span class="k">/v1 → /v2</span><h3>Nothing breaks quietly</h3><p>
+                A breaking change is a new API version.
+              </p>
+            </div>
+            <div class="pr">
+              <span class="k">cost-aware</span><h3>Only what is needed</h3><p>
+                A shared schema, stateless compute, and no infrastructure before it is needed.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" id="community" aria-labelledby="com-title">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="label"><i>~/community</i>$ cat CONTRIBUTING.md</span>
+            <div>
+              <h2 id="com-title">
+                There is room for you, whether you know a lot or are just starting.
+              </h2>
+              <p>
+                Conversations happen in public, in English or Spanish. The rules for taking part are
+                written down and the same for everyone.
+              </p>
+            </div>
+          </div>
+          <div class="ways">
+            <div class="way">
+              <span class="k">read</span><h3>Learn from the decisions</h3><p>
+                Each ADR explains the problem, the options, and why we chose one.
+              </p><a href="#notebook">Go to the notebook →</a>
+            </div>
+            <div class="way">
+              <span class="k">ask</span><h3>Start a discussion</h3><p>
+                Questions, ideas, or a better way to do it. We answer in public so it helps others
+                too.
+              </p><a href="https://github.com/procodeind" target="_blank" rel="noopener"
+                >GitHub ↗</a>
+            </div>
+            <div class="way">
+              <span class="k">contribute</span><h3>Send your first change</h3><p>
+                Some issues are labeled good first issue. Just sign off your commits with <code
+                  >git commit -s</code
+                >.
+              </p><a href="https://github.com/procodeind" target="_blank" rel="noopener"
+                >See issues ↗</a>
+            </div>
+            <div class="way">
+              <span class="k">sustain</span><h3>Sponsor the work</h3><p>
+                Your support pays for maintainer time, CI, and security audits.
+              </p><a href="https://github.com/sponsors/procodeind" target="_blank" rel="noopener"
+                >Sponsor ↗</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block" aria-labelledby="f-title">
+        <div class="wrap founder">
+          <div class="card">
+            <div class="mono-av" aria-hidden="true">JE</div>
+            <div>
+              <div class="nm" id="f-title">Jeffrey Espinel</div>
+              <div class="rl">AI software engineer · founder</div>
+            </div>
+            <p class="rl">Cartagena, Colombia</p>
+          </div>
+          <div class="letter">
+            <p>
+              I started ProCode Ind to build the infrastructure I kept rebuilding on every project:
+              multi-tenant governance and payments for Latin America.
+            </p>
+            <p>
+              I chose to do it in the open. What I learn designing these systems should not stay in
+              a private repository.
+            </p>
+            <p class="small">
+              I run the company with a team of AI agents versioned as code, covering planning,
+              finance and maintenance. That system will be open too.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact" id="contact">
+        <div class="wrap contact-in">
+          <div>
+            <span class="label"><i>~/contact</i>$ mail</span>
+            <h2 style="margin-top:14px">Write to us.</h2>
+            <p>
+              For questions about JATRIX or CondorPay, sponsorships, or if you want to build with
+              us.
+            </p>
+          </div>
+          <div>
+            <div class="copyrow">
+              <code id="mail">jespinel@procodeind.com</code>
+              <button type="button" data-copy="mail">Copy</button>
+            </div>
+            <p class="small-note">
+              Security reports: same address, with [SECURITY] in the subject.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap foot">
+        <span>© 2026 ProCode Ind LLC · Cartagena, Colombia</span>
+        <span
+          ><a href="https://jatrix.cloud" target="_blank" rel="noopener">JATRIX</a> · <a
+            href="https://www.npmjs.com/package/@condorpay/sdk"
+            target="_blank"
+            rel="noopener">CondorPay</a
+          > · <a href="https://github.com/procodeind" target="_blank" rel="noopener">GitHub</a
+          ></span
+        >
+      </div>
+    </footer>
+    <script is:inline src="/assets/site.js"></script>
   </body>
 </html>
