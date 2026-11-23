@@ -222,12 +222,13 @@ footer a:hover{color:var(--fg)}
 .brand-head{transform-origin:10% 90%;animation:nod 11s cubic-bezier(.45,0,.25,1) infinite 4s}
 @keyframes nod{0%,64%,100%{transform:rotate(0)}76%,84%{transform:rotate(-6deg)}}
 /* project marks: owl (JATRIX) and condor (CondorPay), same line style as the iguana */
-.proj-id{display:flex;align-items:center;gap:16px}
-.mark{width:48px;height:48px;flex:none;overflow:visible}
-.mark .ln path{fill:none;stroke:var(--fg);stroke-width:1.6;stroke-linejoin:miter;stroke-linecap:square}
+.proj-id{display:flex;align-items:center;gap:20px}
+.mark{width:80px;height:80px;flex:none;overflow:visible}
+@media (max-width:520px){.mark{width:64px;height:64px}}
+.mark .ln path{fill:none;stroke:var(--fg);stroke-width:1.9;stroke-linejoin:miter;stroke-linecap:square}
 .owl .eyes rect{fill:var(--c);transform-box:fill-box;transform-origin:center}
 .owl.blink .eyes rect{animation:blink .22s ease-in-out}
-.condor .ruff path{fill:none;stroke:var(--c);stroke-width:1.6;stroke-linejoin:miter}
+.condor .ruff path{fill:none;stroke:var(--c);stroke-width:1.9;stroke-linejoin:miter}
 .condor .wing{transform-box:fill-box;animation:flap 13s cubic-bezier(.45,0,.25,1) infinite 5s}
 .condor .wl{transform-origin:100% 60%}
 .condor .wr{transform-origin:0% 60%;animation-name:flapR}
