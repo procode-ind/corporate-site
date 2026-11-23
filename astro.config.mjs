@@ -9,6 +9,11 @@ export default defineConfig({
   site: 'https://www.procodeind.com',
   integrations: [sitemap()],
   base: '/',
+  // The site used to live under /es/ and /en/; keep those links working.
+  redirects: {
+    '/es': '/',
+    '/en': '/',
+  },
   vite: {
     plugins: [tailwindcss()],
   },
