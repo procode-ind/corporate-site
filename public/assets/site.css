@@ -225,13 +225,13 @@ footer a:hover{color:var(--fg)}
 .proj-id{display:flex;align-items:center;gap:20px}
 .mark{width:80px;height:80px;flex:none;overflow:visible}
 @media (max-width:520px){.mark{width:64px;height:64px}}
-.mark .ln path{fill:none;stroke:var(--fg);stroke-width:1.9;stroke-linejoin:miter;stroke-linecap:square}
-.owl .eyes rect{fill:var(--c);transform-box:fill-box;transform-origin:center}
-.owl.blink .eyes rect{animation:blink .22s ease-in-out}
-.condor .ruff path{fill:none;stroke:var(--c);stroke-width:1.9;stroke-linejoin:miter}
+.mark path.l{fill:none;stroke:var(--fg);stroke-width:2.2;stroke-linejoin:miter;stroke-linecap:square}
+.mark path.a{fill:none;stroke:var(--c);stroke-width:2.2;stroke-linejoin:miter;stroke-linecap:square}
+.owl .eyes path{fill:var(--c);transform-box:fill-box;transform-origin:center}
+.owl.blink .eyes path{animation:blink .22s ease-in-out}
 .condor .wing{transform-box:fill-box;animation:flap 13s cubic-bezier(.45,0,.25,1) infinite 5s}
-.condor .wl{transform-origin:100% 60%}
-.condor .wr{transform-origin:0% 60%;animation-name:flapR}
+.condor .wl{transform-origin:100% 38%}
+.condor .wr{transform-origin:0% 38%;animation-name:flapR}
 @keyframes flap{0%,80%,100%{transform:rotate(0)}86%{transform:rotate(7deg)}92%{transform:rotate(-3deg)}}
 @keyframes flapR{0%,80%,100%{transform:rotate(0)}86%{transform:rotate(-7deg)}92%{transform:rotate(3deg)}}
 /* motion: one quiet entrance, a reading-progress hairline, soft hovers */
