@@ -207,7 +207,6 @@ footer a:hover{color:var(--fg)}
 .brand-head .crest{background:var(--ok);-webkit-mask-image:url(/assets/iguana-head-crest.png);mask-image:url(/assets/iguana-head-crest.png)}
 .brand-head .eye{background:var(--signal);-webkit-mask-image:url(/assets/iguana-head-eye.png);mask-image:url(/assets/iguana-head-eye.png);transform-origin:65.8% 22.3%}
 .brand-head.blink .eye{animation:blink .22s ease-in-out}
-.brand-head.draw{animation:draw 1s .1s cubic-bezier(.4,0,.2,1) both,nod 11s cubic-bezier(.45,0,.25,1) 4s infinite}
 .brand-name{font:700 1.15rem var(--mono);letter-spacing:.08em}
 /* iguana pose: body is fixed; tail (two segments) and head pivot to lift now and then */
 .iguana .part{position:absolute;inset:0}
@@ -219,8 +218,6 @@ footer a:hover{color:var(--fg)}
 @keyframes tail{0%,62%,100%{transform:rotate(0)}74%,84%{transform:rotate(3deg)}}
 @keyframes tip{0%,62%,100%{transform:rotate(0)}74%,84%{transform:rotate(7deg)}}
 @keyframes head{0%,64%,100%{transform:rotate(0)}76%,84%{transform:rotate(-3deg)}}
-.brand-head{transform-origin:10% 90%;animation:nod 11s cubic-bezier(.45,0,.25,1) infinite 4s}
-@keyframes nod{0%,64%,100%{transform:rotate(0)}76%,84%{transform:rotate(-6deg)}}
 /* project marks: owl (JATRIX) and condor (CondorPay), same line style as the iguana */
 .proj-id{display:flex;align-items:center;gap:20px}
 .mark{width:80px;height:80px;flex:none;overflow:visible}
@@ -230,8 +227,8 @@ footer a:hover{color:var(--fg)}
 .owl .eyes path{fill:var(--c);transform-box:fill-box;transform-origin:center}
 .owl.blink .eyes path{animation:blink .22s ease-in-out}
 .condor .wing{transform-box:fill-box;animation:flap 4s cubic-bezier(.45,0,.25,1) infinite 1s}
-.condor .wl{transform-origin:100% 38%}
-.condor .wr{transform-origin:0% 38%;animation-name:flapR}
+.condor .wl{transform-origin:100% 70%}
+.condor .wr{transform-origin:0% 70%;animation-name:flapR}
 @keyframes flap{0%,55%,100%{transform:rotate(0)}70%{transform:rotate(7deg)}85%{transform:rotate(-3deg)}}
 @keyframes flapR{0%,55%,100%{transform:rotate(0)}70%{transform:rotate(-7deg)}85%{transform:rotate(3deg)}}
 /* motion: one quiet entrance, a reading-progress hairline, soft hovers */

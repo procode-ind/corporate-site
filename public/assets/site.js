@@ -13,7 +13,7 @@
     function loop(){setTimeout(function(){blink();if(Math.random()<.3)setTimeout(blink,320);loop()},4000+Math.random()*4000)}
     el.classList.add('draw');setTimeout(loop,delay);
   }
-  if(!calm){animate(ig,2200);animate(document.getElementById('brand-head'),1400);
+  if(!calm){animate(ig,2200);var bh=document.getElementById('brand-head');if(bh){setInterval(function(){bh.classList.remove('blink');void bh.offsetWidth;bh.classList.add('blink')},5000)}
     var owl=document.querySelector('.mark.owl');
     if(owl){(function l(){setTimeout(function(){owl.classList.remove('blink');void owl.getBoundingClientRect();owl.classList.add('blink');l()},4000)})()}}
   document.querySelectorAll('[data-copy]').forEach(function(btn){
