@@ -224,8 +224,9 @@ footer a:hover{color:var(--fg)}
 @media (max-width:520px){.mark{width:64px;height:64px}}
 .mark path.l{fill:none;stroke:var(--fg);stroke-width:2.2;stroke-linejoin:miter;stroke-linecap:square}
 .mark path.a{fill:none;stroke:var(--c);stroke-width:2.2;stroke-linejoin:miter;stroke-linecap:square}
-.owl .eyes path{fill:var(--c);transform-box:fill-box;transform-origin:center}
-.owl.blink .eyes path{animation:blink .22s ease-in-out}
+.owl .eyes{transform-box:fill-box;transform-origin:center}
+.owl .eyes path.p{fill:var(--c)}
+.owl.blink .eyes{animation:blink .22s ease-in-out}
 .condor .wing{transform-box:fill-box;animation:flap 5s cubic-bezier(.45,0,.25,1) infinite 1s}
 .condor path.l,.condor path.a{stroke-width:1.8}
 .condor path.e{fill:var(--fg)}
