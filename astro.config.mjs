@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.procodeind.com',
+  site: 'https://procodeind.com',
   integrations: [sitemap()],
   base: '/',
   // The site used to live under /es/ and /en/; keep those links working.
