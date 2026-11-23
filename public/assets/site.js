@@ -15,7 +15,7 @@
   }
   if(!calm){animate(ig,2200);animate(document.getElementById('brand-head'),1400);
     var owl=document.querySelector('.mark.owl');
-    if(owl){(function l(){setTimeout(function(){owl.classList.remove('blink');void owl.getBoundingClientRect();owl.classList.add('blink');l()},5000+Math.random()*5000)})()}}
+    if(owl){(function l(){setTimeout(function(){owl.classList.remove('blink');void owl.getBoundingClientRect();owl.classList.add('blink');l()},4000)})()}}
   document.querySelectorAll('[data-copy]').forEach(function(btn){
     btn.addEventListener('click',function(){
       var el=document.getElementById(btn.getAttribute('data-copy'));
